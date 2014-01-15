@@ -1,2 +1,2 @@
-psicotropico [![Build Status](https://travis-ci.org/jroperto/psicotropico.png)](https://travis-ci.org/jroperto/psicotropico)
+psicotropico [![Build Status](https://travis-ci.org/jroperto/psicotropico.png?branch=master)](https://travis-ci.org/jroperto/psicotropico)
 ============
