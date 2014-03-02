@@ -22,10 +22,10 @@ apply plugin: 'war'
 apply plugin: 'appengine'
 
 
-group       = 'ar.com.juanroperto'
+group       = 'com.github.jroperto'
 version     = '0.0.1'
 
-project.ext {
+ext {
 
     springVersion       = '4.0.2.RELEASE'
     appengineVersion    = '1.9.0'
@@ -60,13 +60,15 @@ appengine {
     downloadSdk = true
 
     appcfg {
+        email = appengineEmail
+
         logs {
-            severity = 1
+            severity = 0
             outputFile = file('mylogs.txt')
         }
 
         app {
-            id = 'psicotropico'
+            id = 'lazyappts'
         }
 
         update {
