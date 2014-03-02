@@ -48,7 +48,7 @@ dependencies {
 
     // Others
     compile 'org.apache.commons:commons-lang3:3.2.1'
-
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '1.10'
