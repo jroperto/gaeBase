@@ -60,7 +60,6 @@ appengine {
     downloadSdk = true
 
     appcfg {
-        email = appengineEmail
 
         logs {
             severity = 0
