@@ -1,0 +1,98 @@
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'java'
+apply plugin: 'pmd'
+apply plugin: 'checkstyle'
+apply plugin: 'war'
+apply plugin: 'appengine'
+
+
+group       = 'ar.com.juanroperto'
+version     = '0.0.1'
+
+project.ext {
+
+    springVersion       = '4.0.2.RELEASE'
+    appengineVersion    = '1.9.0'
+    objectifyVersion    = '4.0rc2'
+}
+
+buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.8.9'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    appengineSdk "com.google.appengine:appengine-java-sdk:$appengineVersion"
+
+    // Spring
+    compile "org.springframework:spring-webmvc:$springVersion"
+
+    // GAE
+    compile "com.google.appengine:appengine-api-1.0-sdk:$appengineVersion",
+            "com.google.appengine:appengine-api-labs:$appengineVersion"
+
+    // Objectify
+    compile "com.googlecode.objectify:objectify:$objectifyVersion"
+
+    // Others
+    compile 'org.apache.commons:commons-lang3:3.2.1'
+}
+
+appengine {
+    downloadSdk = true
+
+    appcfg {
+        logs {
+            severity = 1
+            outputFile = file('mylogs.txt')
+        }
+
+        app {
+            id = 'psicotropico'
+        }
+
+        update {
+            useJava7 = true
+        }
+    }
+}
+
+// PMD
+pmd {
+    toolVersion = '5.0.5'
+    ruleSetFiles = files("$projectDir/config/pmd/pmd.xml")
+    ruleSets = []
+}
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+    if ((task.name == 'pmdMain' || task.name == 'pmdTest') && state.failure) {
+        // print errors
+        def outFile = task.name == 'pmdMain' ? 'main.xml' : 'test.xml'
+        def reportFile = file("${buildDir}/reports/pmd/${outFile}")
+
+        if(reportFile.exists()) {
+            def result = new XmlParser().parse(reportFile)
+
+            println ''
+            result.file.each { file ->
+                file.violation.each { violation ->
+                    println "${file.'@name'}:${violation.'@beginline'}: ${violation.text()}"
+                }
+            }
+        }
+
+
+    }
+}
