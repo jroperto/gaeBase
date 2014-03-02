@@ -57,7 +57,6 @@ dependencies {
 }
 
 appengine {
-    downloadSdk = true
 
     appcfg {
 
