@@ -19,11 +19,14 @@ apply plugin: 'java'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'war'
-//apply plugin: 'appengine'
+apply plugin: 'appengine'
 
 
 group       = 'com.github.jroperto'
 version     = '0.0.1'
+
+sourceCompatibility = '1.7'
+targetCompatibility = '1.7'
 
 ext {
 
@@ -40,7 +43,7 @@ repositories {
 
 dependencies {
 
-    //appengineSdk "com.google.appengine:appengine-java-sdk:$appengineVersion"
+    appengineSdk "com.google.appengine:appengine-java-sdk:$appengineVersion"
 
     // Spring
     compile "org.springframework:spring-webmvc:$springVersion"
@@ -56,24 +59,17 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.2.1'
 }
 
-//appengine {
-//
-//    appcfg {
-//
-//        logs {
-//            severity = 0
-//            outputFile = file('mylogs.txt')
-//        }
-//
-//        app {
-//            id = 'lazyappts'
-//        }
-//
-//        update {
-//            useJava7 = true
-//        }
-//    }
-//}
+appengine {
+
+    downloadSdk = false
+
+    appcfg {
+
+        update {
+            useJava7 = true
+        }
+    }
+}
 
 // PMD
 pmd {
