@@ -1,3 +1,18 @@
+buildscript {
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.8.9'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.10'
+}
+
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'java'
@@ -17,16 +32,7 @@ project.ext {
     objectifyVersion    = '4.0rc2'
 }
 
-buildscript {
 
-    repositories {
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath 'com.google.appengine:gradle-appengine-plugin:1.8.9'
-    }
-}
 
 repositories {
     mavenCentral()
@@ -48,10 +54,6 @@ dependencies {
 
     // Others
     compile 'org.apache.commons:commons-lang3:3.2.1'
-}
-
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.10'
 }
 
 appengine {
