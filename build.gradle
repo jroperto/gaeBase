@@ -40,7 +40,7 @@ repositories {
 
 dependencies {
 
-    appengineSdk "com.google.appengine:appengine-java-sdk:$appengineVersion"
+    //appengineSdk "com.google.appengine:appengine-java-sdk:$appengineVersion"
 
     // Spring
     compile "org.springframework:spring-webmvc:$springVersion"
@@ -56,24 +56,24 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.2.1'
 }
 
-appengine {
-
-    appcfg {
-
-        logs {
-            severity = 0
-            outputFile = file('mylogs.txt')
-        }
-
-        app {
-            id = 'lazyappts'
-        }
-
-        update {
-            useJava7 = true
-        }
-    }
-}
+//appengine {
+//
+//    appcfg {
+//
+//        logs {
+//            severity = 0
+//            outputFile = file('mylogs.txt')
+//        }
+//
+//        app {
+//            id = 'lazyappts'
+//        }
+//
+//        update {
+//            useJava7 = true
+//        }
+//    }
+//}
 
 // PMD
 pmd {
