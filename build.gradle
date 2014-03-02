@@ -19,7 +19,7 @@ apply plugin: 'java'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'war'
-apply plugin: 'appengine'
+//apply plugin: 'appengine'
 
 
 group       = 'com.github.jroperto'
