@@ -1,12 +1,8 @@
-package com.github.jroperto.psicotropico.model;
+package com.github.jroperto.gaebase.model;
 
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
-/**
- * User: Juan
- * Date: 1/13/14
- */
 public class User {
 
     @Id

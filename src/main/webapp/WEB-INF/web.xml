@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
 	
-	<display-name>psicotropico</display-name>
+	<display-name>gaeBase</display-name>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>psicotropico-applicationContext.xml</param-value>
+		<param-value>gaeBase-applicationContext.xml</param-value>
 	</context-param>
 
 	<listener>
@@ -16,13 +16,13 @@
 	</listener>
 	
 	<servlet>
-		<servlet-name>psicotropico</servlet-name>
+		<servlet-name>gaeBase</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 
     <servlet-mapping>
-		<servlet-name>psicotropico</servlet-name>
+		<servlet-name>gaeBase</servlet-name>
 		<url-pattern>/*</url-pattern>
 	</servlet-mapping>
 
