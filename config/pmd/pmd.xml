@@ -37,6 +37,11 @@
         <exclude name="CouplingBetweenObjects"/>
         <exclude name="ExcessiveImports"/>
     </rule>
+    <rule ref="rulesets/java/controversial.xml/DataflowAnomalyAnalysis">
+        <properties>
+            <property name="violationSuppressRegex" value="^Found 'UR'-anomaly.*"/>
+        </properties>
+    </rule>
 
     <rule ref="rulesets/java/design.xml">
         <exclude name="ConfusingTernary" />

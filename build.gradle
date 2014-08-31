@@ -1,10 +1,3 @@
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.10'
-}
-
-
-apply plugin: 'eclipse'
-apply plugin: 'idea'
 apply plugin: 'java'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
@@ -19,10 +12,9 @@ targetCompatibility = '1.7'
 ext {
 
     springVersion       = '4.0.2.RELEASE'
-    appengineVersion    = '1.9.0'
-    objectifyVersion    = '4.0rc2'
+    appengineVersion    = '1.9.9'
+    objectifyVersion    = '5.0.3'
 }
-
 
 
 repositories {
@@ -44,6 +36,7 @@ dependencies {
     // Others
     compile 'org.apache.commons:commons-lang3:3.2.1'
 }
+
 
 // PMD
 pmd {
@@ -71,4 +64,9 @@ gradle.taskGraph.afterTask { Task task, TaskState state ->
 
 
     }
+}
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
 }
