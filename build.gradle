@@ -5,7 +5,7 @@ apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'war'
 
-group       = 'ar.com.jroperto'
+group       = 'com.github.jroperto'
 version     = '0.0.1'
 
 sourceCompatibility = '1.7'
