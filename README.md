@@ -1,4 +1,4 @@
 gaeBase
 ============
 
-Drone CI [![Build Status](https://drone.io/github.com/jroperto/gaeBase/status.png)](https://drone.io/github.com/jroperto/gaeBase/latest)
+[![Build Status](https://drone.io/github.com/jroperto/gaeBase/status.png)](https://drone.io/github.com/jroperto/gaeBase/latest)

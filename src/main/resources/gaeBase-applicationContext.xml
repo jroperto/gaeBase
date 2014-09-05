@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/mvc
+		http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <context:component-scan base-package="com.github.jroperto.gaebase" />
+    <mvc:annotation-driven />
+
+    <bean name="objectifyRepository" class="com.github.jroperto.gaebase.repository.ObjectifyRepository">
+        <constructor-arg name="entities">
+            <util:list value-type="java.lang.Class">
+                <value>com.github.jroperto.gaebase.model.User</value>
+            </util:list>
+        </constructor-arg>
+    </bean>
+
+</beans>

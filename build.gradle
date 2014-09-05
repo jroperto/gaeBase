@@ -1,9 +1,11 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 apply plugin: 'java'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'war'
 
-group       = 'com.github.jroperto'
+group       = 'ar.com.jroperto'
 version     = '0.0.1'
 
 sourceCompatibility = '1.7'
@@ -12,10 +14,9 @@ targetCompatibility = '1.7'
 ext {
 
     springVersion       = '4.0.2.RELEASE'
-    appengineVersion    = '1.9.9'
     objectifyVersion    = '5.0.3'
+    appengineVersion    = '1.9.10'
 }
-
 
 repositories {
     mavenCentral()
@@ -37,6 +38,29 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.2.1'
 }
 
+task processAppEngine(type: Copy) {
+    from('src/main/resources') {
+        include 'appengine-web.xml'
+        filter(ReplaceTokens, tokens:
+                [
+                        "gae.version": project.gaeVersion
+                ]
+        )
+    }
+    into 'src/main/webapp/WEB-INF'
+}
+
+processResources{
+    exclude 'appengine-web.xml'
+}
+
+processResources.dependsOn(processAppEngine)
+
+gradle.taskGraph.afterTask { Task task, TaskState state ->
+    if (task.name == 'war') {
+        ant.unzip(src: war.archivePath, dest: "$buildDir/exploded")
+    }
+}
 
 // PMD
 pmd {
@@ -65,7 +89,6 @@ gradle.taskGraph.afterTask { Task task, TaskState state ->
 
     }
 }
-
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.0'
