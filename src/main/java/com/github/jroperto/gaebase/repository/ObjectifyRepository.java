@@ -1,29 +1,19 @@
 package com.github.jroperto.gaebase.repository;
 
-import com.googlecode.objectify.Objectify;
+import com.github.jroperto.gaebase.model.User;
+import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
+public final class ObjectifyRepository {
 
-public class ObjectifyRepository {
-
-    private final List<Class> entities;
-
-
-    public ObjectifyRepository(List<Class> entities) {
-        this.entities = entities;
+    static {
+        ObjectifyService.register(User.class);
     }
 
-    @PostConstruct
-    public void registerEntities() {
-        for (Class clazz : entities) {
-            ObjectifyService.register(clazz);
-        }
-    }
+    private ObjectifyRepository() { }
 
-    public static Objectify ofy() {
-        return ObjectifyService.ofy();
+    public static ObjectifyFactory factory() {
+        return ObjectifyService.factory();
     }
 
 }

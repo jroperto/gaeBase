@@ -1,22 +1,14 @@
 import org.apache.tools.ant.filters.ReplaceTokens
 
 apply plugin: 'java'
-apply plugin: 'pmd'
-apply plugin: 'checkstyle'
 apply plugin: 'war'
-
-group       = 'com.github.jroperto'
-version     = '0.0.1'
+apply plugin: 'checkstyle'
+apply plugin: 'pmd'
+apply plugin: 'jacoco'
+apply plugin: "com.eriwen.gradle.js"
 
 sourceCompatibility = '1.7'
 targetCompatibility = '1.7'
-
-ext {
-
-    springVersion       = '4.0.2.RELEASE'
-    objectifyVersion    = '5.0.3'
-    appengineVersion    = '1.9.10'
-}
 
 repositories {
     mavenCentral()
@@ -24,26 +16,57 @@ repositories {
 
 dependencies {
 
-    // Spring
-    compile "org.springframework:spring-webmvc:$springVersion"
+    compile (
+            // Spring
+            [group: 'org.springframework',              name: 'spring-core',            version: springVersion],
+            [group: 'org.springframework',              name: 'spring-webmvc',          version: springVersion],
 
-    // GAE
-    compile "com.google.appengine:appengine-api-1.0-sdk:$appengineVersion",
-            "com.google.appengine:appengine-api-labs:$appengineVersion"
+            // Jackson Mapper
+            [group: 'com.fasterxml.jackson.core',       name: 'jackson-core',           version: jacksonMapperVersion],
+            [group: 'com.fasterxml.jackson.core',       name: 'jackson-databind',       version: jacksonMapperVersion],
 
-    // Objectify
-    compile "com.googlecode.objectify:objectify:$objectifyVersion"
+            // GAE
+            [group: 'com.google.appengine',             name: 'appengine-api-1.0-sdk',  version: appengineVersion],
+            [group: 'com.google.appengine',             name: 'appengine-api-labs',     version: appengineVersion],
+            [group: 'com.googlecode.objectify',         name: 'objectify',              version: objectifyVersion],
 
-    // Others
-    compile 'org.apache.commons:commons-lang3:3.2.1'
+            // Utils
+            [group: 'org.apache.commons',               name: 'commons-lang3',          version: commonsLang3Version],
+            [group: 'commons-io',                       name: 'commons-io',             version: commonsIoVersion],
+            [group: 'com.google.guava',                 name: 'guava',                  version: googleGuavaVersion],
+            [group: 'org.hamcrest',                     name: 'hamcrest-library',       version: hamcrestVersion],
+    )
+
+
+    providedCompile (
+            // Servlet
+            [group: 'javax.servlet',                    name: 'servlet-api',            version: servletApiVersion]
+    )
+
+    testCompile (
+            [group: 'junit',                            name: 'junit',                  version: junitVersion],
+            [group: 'org.mockito',                      name: 'mockito-all',            version: mockitoVersion],
+            [group: 'org.hamcrest',                     name: 'hamcrest-integration',   version: hamcrestVersion],
+            [group: 'org.springframework',              name: 'spring-test',            version: springVersion]
+    )
 }
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "com.eriwen:gradle-js-plugin:1.12.1"
+    }
+}
+
 
 task processAppEngine(type: Copy) {
     from('src/main/resources') {
         include 'appengine-web.xml'
         filter(ReplaceTokens, tokens:
                 [
-                        "gae.version": project.gaeVersion
+                        "gae.version": project.hasProperty('gaeVersion') ? project.gaeVersion : 'development'
                 ]
         )
     }
@@ -54,42 +77,20 @@ processResources{
     exclude 'appengine-web.xml'
 }
 
-processResources.dependsOn(processAppEngine)
+processResources.dependsOn processAppEngine
 
-gradle.taskGraph.afterTask { Task task, TaskState state ->
-    if (task.name == 'war') {
-        ant.unzip(src: war.archivePath, dest: "$buildDir/exploded")
-    }
+task unzipWar << {
+    ant.unzip(src: war.archivePath, dest: "$buildDir/exploded")
 }
 
-// PMD
+war.finalizedBy unzipWar
+
 pmd {
-    toolVersion = '5.0.5'
     ruleSetFiles = files("$projectDir/config/pmd/pmd.xml")
-    ruleSets = []
+    consoleOutput = true
 }
 
-gradle.taskGraph.afterTask { Task task, TaskState state ->
-    if ((task.name == 'pmdMain' || task.name == 'pmdTest') && state.failure) {
-        // print errors
-        def outFile = task.name == 'pmdMain' ? 'main.xml' : 'test.xml'
-        def reportFile = file("${buildDir}/reports/pmd/${outFile}")
-
-        if(reportFile.exists()) {
-            def result = new XmlParser().parse(reportFile)
-
-            println ''
-            result.file.each { file ->
-                file.violation.each { violation ->
-                    println "${file.'@name'}:${violation.'@beginline'}: ${violation.text()}"
-                }
-            }
-        }
-
-
-    }
-}
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.0'
+    gradleVersion = '2.1'
 }

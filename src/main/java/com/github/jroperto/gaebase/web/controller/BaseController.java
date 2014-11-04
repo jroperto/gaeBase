@@ -1,4 +1,4 @@
-package com.github.jroperto.gaebase.controller;
+package com.github.jroperto.gaebase.web.controller;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
