@@ -19,7 +19,6 @@ atlassian-ide-plugin.xml
 build
 .gradle
 out
-gradle.properties
 classes
 /bin
 /hs_err_*.log
