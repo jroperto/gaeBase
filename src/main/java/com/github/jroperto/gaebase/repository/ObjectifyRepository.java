@@ -1,13 +1,14 @@
 package com.github.jroperto.gaebase.repository;
 
-import com.github.jroperto.gaebase.model.User;
+import com.github.jroperto.gaebase.model.Article;
 import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
 
 public final class ObjectifyRepository {
 
+
     static {
-        ObjectifyService.register(User.class);
+        ObjectifyService.register(Article.class);
     }
 
     private ObjectifyRepository() { }

@@ -7,8 +7,6 @@ apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: "com.eriwen.gradle.js"
 
-sourceCompatibility = '1.7'
-targetCompatibility = '1.7'
 
 repositories {
     mavenCentral()
@@ -27,27 +25,29 @@ dependencies {
 
             // GAE
             [group: 'com.google.appengine',             name: 'appengine-api-1.0-sdk',  version: appengineVersion],
-            [group: 'com.google.appengine',             name: 'appengine-api-labs',     version: appengineVersion],
             [group: 'com.googlecode.objectify',         name: 'objectify',              version: objectifyVersion],
 
             // Utils
             [group: 'org.apache.commons',               name: 'commons-lang3',          version: commonsLang3Version],
             [group: 'commons-io',                       name: 'commons-io',             version: commonsIoVersion],
             [group: 'com.google.guava',                 name: 'guava',                  version: googleGuavaVersion],
-            [group: 'org.hamcrest',                     name: 'hamcrest-library',       version: hamcrestVersion],
+            [group: 'org.hamcrest',                     name: 'hamcrest-library',       version: hamcrestVersion]
     )
 
 
     providedCompile (
             // Servlet
-            [group: 'javax.servlet',                    name: 'servlet-api',            version: servletApiVersion]
+            [group: 'javax.servlet',                    name: 'javax.servlet-api',      version: servletApiVersion]
     )
 
     testCompile (
             [group: 'junit',                            name: 'junit',                  version: junitVersion],
             [group: 'org.mockito',                      name: 'mockito-all',            version: mockitoVersion],
             [group: 'org.hamcrest',                     name: 'hamcrest-integration',   version: hamcrestVersion],
-            [group: 'org.springframework',              name: 'spring-test',            version: springVersion]
+            [group: 'org.springframework',              name: 'spring-test',            version: springVersion],
+            [group: 'com.google.appengine',             name: 'appengine-testing',      version: appengineVersion],
+            [group: 'com.google.appengine',             name: 'appengine-api-labs',     version: appengineVersion],
+            [group: 'com.google.appengine',             name: 'appengine-api-stubs',    version: appengineVersion]
     )
 }
 
@@ -59,7 +59,6 @@ buildscript {
         classpath "com.eriwen:gradle-js-plugin:1.12.1"
     }
 }
-
 
 task processAppEngine(type: Copy) {
     from('src/main/resources') {

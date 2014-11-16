@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/")
-public class ServerStatusController extends BaseController {
+@RequestMapping("/serverStatus")
+public class ServerStatusController extends ControllerBase {
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
